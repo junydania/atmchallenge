@@ -19,7 +19,7 @@ class Atm
 
       {:status => false, :message => 'insufficient funds in ATM', :date => Date.today}
 
-   when incorrect_pin?(pin_code, account.pin_code)
+    when incorrect_pin?(pin_code, account.pin_code)
       {:status => false, :message => 'wrong pin', :date => Date.today}
 
     when card_expired?(account.exp_date)
@@ -54,7 +54,10 @@ class Atm
   end
 
   def card_expired?(exp_date)
-    Date.strptime(exp_date, '%m/%y') < Date.today
+    # binding.pry
+    m, y = exp_date.split("/")
+    expiry_date = Date.new(y.to_i, m.to_i, -1)
+    expiry_date < Date.today
   end
 
 end

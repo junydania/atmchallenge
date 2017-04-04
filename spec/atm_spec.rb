@@ -1,10 +1,10 @@
 require './lib/atm.rb'
 require 'date'
-require 'debugger'
+require 'pry-byebug'
 
 describe Atm do
 
-  let(:account) { instance_double('Account', :pin_code => '1234', :exp_date => '04/17')}
+  let(:account) { instance_double('Account', :pin_code => '1234', :exp_date => '04/2017')}
 
   before do
     allow(account).to receive(:balance).and_return(100)
@@ -16,8 +16,7 @@ describe Atm do
   end
 
   it 'funds are reduced at withdraw' do
-    debugger
-    subject.withdraw(50,'1234','04/17', account)
+    subject.withdraw(50,'1234','04/2017', account)
     expect(subject.funds).to eq(950)
   end
 
@@ -25,12 +24,12 @@ describe Atm do
 it 'allow withdraw if account has enough balance' do
   amount = 45
   expected_output = {:status =>true, :message => 'success', :date => Date.today, :amount => amount}
-  expect(subject.withdraw(45, '1234','04/17', account)).to eq expected_output
+  expect(subject.withdraw(45, '1234','04/2017', account)).to eq expected_output
 end
 
 it 'reject withdraw if account has sufficient funds' do
   expected_output = {:status => true, :message => 'insufficient funds', :date => Date.today}
-  expect(subject.withdraw(105,'1234', '04/17',account)).to eq expected_output
+  expect(subject.withdraw(105,'1234', '04/2017',account)).to eq expected_output
 end
 
 it 'rejects withdraw if ATM has insufficient funds' do
@@ -45,8 +44,10 @@ it 'reject withdraw if pin is wrong' do
 end
 
 it 'rejects withdraw if card is expired' do
-  allow(account).to receive(:exp_date).and_return('12/15')
+  # binding.pry
+  allow(account).to receive(:exp_date).and_return('12/2015')
   expected_output = {:status => false, :message => 'card expired', :date => Date.today}
-  expect(subject.withdraw(6, '1234', '12/15',account)).to eq (expected_output)
+  expect(subject.withdraw(6, '1234', '12/2015', account)).to eq (expected_output)
+
 end
 end
