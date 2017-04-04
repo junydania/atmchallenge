@@ -7,7 +7,7 @@ class Atm
   end
 
 
-  def withdraw(amount, pin_code, account)
+  def withdraw(amount, pin_code,exp_date,account)
 
     case
 
@@ -54,7 +54,7 @@ class Atm
   end
 
   def card_expired?(exp_date)
-    Date.striptime(exp_date, '%m/%y') < Date.today
+    Date.strptime(exp_date, '%m/%y') < Date.today
   end
 
 end
