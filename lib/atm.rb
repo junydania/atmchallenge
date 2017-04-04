@@ -7,7 +7,7 @@ class Atm
   end
 
 
-  def withdraw(amount, pin_code,exp_date,account)
+  def withdraw(amount, pin_code,exp_date,account_status,account)
 
     case
 
@@ -24,6 +24,9 @@ class Atm
 
     when card_expired?(account.exp_date)
       {:status => false, :message => 'card expired', :date => Date.today}
+
+    when account_disabled?(account_status)
+      {:status => false, :message => 'Account disabled', :date => Date.today }
 
     else
 
@@ -58,6 +61,10 @@ class Atm
     m, y = exp_date.split("/")
     expiry_date = Date.new(y.to_i, m.to_i, -1)
     expiry_date < Date.today
+  end
+
+  def account_disabled?(account_status)
+    account_status == :disabled
   end
 
 end
