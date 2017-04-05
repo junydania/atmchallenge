@@ -44,7 +44,6 @@ it 'reject withdraw if pin is wrong' do
 end
 
 it 'rejects withdraw if card is expired' do
-  # binding.pry
   allow(account).to receive(:exp_date).and_return('12/2015')
   expected_output = {status: false, message: 'card expired', date: Date.today}
   expect(subject.withdraw(6, '1234', '12/2015', :active, account)).to eq (expected_output)
