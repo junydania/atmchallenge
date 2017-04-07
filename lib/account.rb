@@ -18,7 +18,6 @@ class Account
     @account_status = :deactivated
   end
 
-
 private
 
 def set_owner(obj)
@@ -32,7 +31,6 @@ end
 def generate_pin
   rand(1000..9999)
 end
-
 
 def set_expire_date
   Date.today.next_year(STANDARD_VALIDITY_YRS).strftime('%m/%Y')

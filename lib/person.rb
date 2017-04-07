@@ -27,7 +27,7 @@ class Person
   end
 
   def withdraw(args = {})
-    @account == nil ? missing_account : withdraw_funds(args)
+    @account.nil ? missing_account : withdraw_funds(args)
   end
 
   private
@@ -51,7 +51,7 @@ class Person
 
   def withdraw_funds(args)
     atm = Atm.new
-    args[:atm] == nil ? missing_atm : args[:atm] = atm
+    args[:atm].nil ? missing_atm : args[:atm] = atm
     account = @account
     amount = args[:amount]
     pin = args[:pin]
