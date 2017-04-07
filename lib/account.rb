@@ -14,7 +14,6 @@ class Account
     @exp_date = set_expire_date
   end
 
-
   def deactivate
     @account_status = :deactivated
   end
